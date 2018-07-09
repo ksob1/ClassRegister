@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login page</title>
+    <title>ClassRegister</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 <body>
-<h1>Login page</h1>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Log in" />
-</form>
+<div id="main">
+    <div class="highlight info">Login to access class register</div>
+    <p th:if="${param.error}" class="error">Wrong user or password</p>
+    <form th:action="@{/login}" method="post">
+        <input type="text" id="username" name="username" placeholder="Login" autofocus="autofocus" /> <br />
+        <input type="password" id="password" placeholder="Password" name="password" /> <br />
+        <input type="submit" value="Log in" />
+    </form>
+</div>
+<footer>
+    <span id="adminLogin">Login for administrator account is <span class="highlight">admin:admin</span></span><br />
+    <span id="studentLogin">Login for student account is <span class="highlight">student:student</span></span>
+</footer>
 </body>
 </html>

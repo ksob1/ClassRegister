@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>ClassRegister</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+<div id="main">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+<footer>
+    <div sec:authorize="hasAuthority('ROLE_USER')">Text visible to user.</div>
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')">Text visible to admin.</div>
+</footer>
+</body>
+</html>

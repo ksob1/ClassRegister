@@ -9,22 +9,34 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication().withUser("kris").password(passwordEncoder().encode("test"))
-                .authorities("ROLES_USER","ROLES_ADMIN");
+        auth.inMemoryAuthentication()
+                .withUser("admin").password(passwordEncoder().encode("admin"))
+                .authorities("ROLE_ADMIN")
+                .and()
+                .withUser("student").password(passwordEncoder().encode("student"))
+                .authorities("ROLE_USER");
     }
 
     public void configure(HttpSecurity security) throws Exception{
         security.authorizeRequests()
+                .antMatchers("/css/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .httpBasic();
     }
